@@ -1,9 +1,13 @@
 import express from "express";
 const router = express.Router();
-import { getCategories, createCategories, getCategoriesByTitle } from "../controllers/categoriesController.js";
+import { getCategories, createCategories, getCategoriesByTitle, deleteCategory } from "../controllers/categoriesController.js"; // Import Controllers
 
-router.get("/", getCategories);
-router.get("/search", getCategoriesByTitle);
-router.post("/", createCategories);
+router.get("/", getCategories); // Get All Categories
+
+router.post("/", createCategories); // Post New Category
+
+router.delete("/", deleteCategory); // Delete Category By Slug
+
+router.get("/search", getCategoriesByTitle); // Search For Category By Title
 
 export default router;
