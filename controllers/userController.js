@@ -114,11 +114,11 @@ export const userRegister = async (req, res) => {
     });
     if (user) {
       return res.status(400).json({
-        msg: "Email Already Exists",
+        msg: "هذا البريد الالكتروني مسجل بالفعل",
       });
     } else if (usernameCheck) {
       return res.status(400).json({
-        msg: "Username Already Exists",
+        msg: "اسم الحساب مسجل بالفعل",
       });
     }
 
