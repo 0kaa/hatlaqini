@@ -9,19 +9,25 @@ import CATEGORIES_MODEL from "../utilities/categories-data.js";
 
 // Get All Categories
 export const getCategories = async (req, res) => {
+
   const categories = await CATEGORIES_MODEL.getAllCategories();
 
   res.json({ categories });
+
 };
 
 // Get Categories By Title
 export const getCategoriesByTitle = async (req, res) => {
+
   const categories = await CATEGORIES_MODEL.getCategoryByTitle(req.query.query);
+
   res.json({ categories });
+
 };
 
 // Create New Category
 export const createCategories = async (req, res) => {
+
   let { title, slug } = req.body;
 
   slug = string_to_slug(slug);
@@ -41,7 +47,9 @@ export const createCategories = async (req, res) => {
 
 // Delete Category By Slug in body
 export const deleteCategory = async (req, res) => {
+
   let { slug } = req.body;
+
   slug = string_to_slug(slug);
 
   const category = await Categories.findOne({ slug });
