@@ -14,6 +14,9 @@ app.use("/", user);
 app.use("/categories", categoriesRoutes);
 app.use("/items", itemsRoutes);
 app.use("/uploads", express.static("uploads"));
+app.use((req, res) => {
+  res.redirect("/");
+});
 
 const CONNECTION_URL = "mongodb+srv://mahmoud:8u4xwga99ahmiz1q@cluster0.bktlm.mongodb.net/hatlaqini?retryWrites=true&w=majority";
 const PORT = process.env.PORT || 5000;

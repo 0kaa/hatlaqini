@@ -3,8 +3,8 @@ const Schema = mongoose.Schema;
 
 const CategoriesSchema = Schema({
   title: { type: String, required: true },
-  slug: { type: String },
   createdAt: { type: Date, default: Date.now() },
+  itemCounts: { type: Number, default: 0 },
 });
 
 const Categories = mongoose.model("categories", CategoriesSchema);
