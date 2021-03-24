@@ -1,6 +1,5 @@
 import ITEM_MODEL from "../utilities/item-data.js";
-import Item from "./../models/itemModel.js";
-import Categories from "./../models/categoriesModel.js";
+import { Categories, Item } from "./../models/Model.js";
 
 // Get All Categories
 export const getItems = async (req, res) => {

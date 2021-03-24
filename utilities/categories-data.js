@@ -1,4 +1,4 @@
-import Categories from "../models/categoriesModel.js";
+import { Categories } from "../models/Model.js";
 
 const CATEGORIES_MODEL = {
   getAllCategories: () => {

@@ -5,12 +5,14 @@ import cors from "cors";
 import user from "./routes/userRoutes.js";
 import categoriesRoutes from "./routes/categoriesRoutes.js";
 import itemsRoutes from "./routes/itemsRoutes.js";
+import chatRoutes from "./routes/chatRoutes.js";
 
 const app = express();
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 app.use("/", user);
+app.use("/chat", chatRoutes);
 app.use("/categories", categoriesRoutes);
 app.use("/items", itemsRoutes);
 app.use("/uploads", express.static("uploads"));

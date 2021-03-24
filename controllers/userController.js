@@ -1,4 +1,4 @@
-import User from "../models/userModel.js";
+import { User } from "../models/Model.js";
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const { validationResult } = require("express-validator/check");
