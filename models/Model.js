@@ -13,12 +13,13 @@ const ItemSchema = Schema({
   categories: [{ type: Schema.Types.ObjectId, ref: "categories" }],
 });
 
-const UserSchema = Schema({
-  username: { type: String, required: true },
-  email: { type: String, required: true },
-  password: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now() },
-});
+const UserSchema = Schema(
+  {
+    username: { type: String, required: true, unique: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    createdAt: { type: Date, default: Date.now() },
+  });
 
 const ConversationSchema = Schema({
   sender_id: { type: Schema.Types.ObjectId, ref: "user" },

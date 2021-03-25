@@ -109,19 +109,6 @@ export const userRegister = async (req, res) => {
     var user = await User.findOne({
       email,
     });
-    var usernameCheck = await User.findOne({
-      username,
-    });
-    if (user) {
-      return res.status(400).json({
-        msg: "هذا البريد الالكتروني مسجل بالفعل",
-      });
-    } else if (usernameCheck) {
-      return res.status(400).json({
-        msg: "اسم الحساب مسجل بالفعل",
-      });
-    }
-
     user = new User({
       username,
       email,
@@ -161,6 +148,6 @@ export const userRegister = async (req, res) => {
     );
   } catch (err) {
     console.log(err.message);
-    res.status(500).send("Error in Saving");
+    res.status(500).send(err.message);
   }
 };
