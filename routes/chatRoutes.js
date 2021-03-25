@@ -1,6 +1,7 @@
 import express from "express";
 const router = express.Router();
-import { getAllConversations, CreateConversation, CreateChat, getMessage, getMessageByConversationID } from "./../controllers/chatController.js";
+import { getAllConversations, CreateConversation, } from './../controllers/ConversationController.js'
+import { CreateChat, getMessage, getMessageByConversationID } from "./../controllers/chatController.js";
 
 router.get("/conversation", getAllConversations).post("/conversation", CreateConversation);
 

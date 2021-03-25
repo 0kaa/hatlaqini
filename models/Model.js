@@ -13,27 +13,26 @@ const ItemSchema = Schema({
   categories: [{ type: Schema.Types.ObjectId, ref: "categories" }],
 });
 
-const UserSchema = Schema(
-  {
-    username: { type: String, required: true, unique: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    createdAt: { type: Date, default: Date.now() },
-  });
+const UserSchema = Schema({
+  username: { type: String, required: true, unique: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  createdAt: { type: Date, default: Date.now() },
+});
 
 const ConversationSchema = Schema({
-  sender_id: { type: Schema.Types.ObjectId, ref: "user" },
-  received_id: { type: Schema.Types.ObjectId, ref: "user" },
+  sender_id: { type: Schema.Types.ObjectId, ref: "user", required: true },
+  received_id: { type: Schema.Types.ObjectId, ref: "user", required: true },
   latest_msg: { type: String },
   createdAt: { type: Date, default: Date.now() },
   updateAt: { type: Date, default: Date.now() },
 });
 
 const MessageSchema = Schema({
-  msg: { type: String },
-  conversation_id: { type: Schema.Types.ObjectId, ref: "conversation" },
-  sender_id: { type: Schema.Types.ObjectId, ref: "user" },
-  received_id: { type: Schema.Types.ObjectId, ref: "user" },
+  msg: { type: String, required: true },
+  conversation_id: { type: Schema.Types.ObjectId, ref: "conversation", required: true },
+  sender_id: { type: Schema.Types.ObjectId, ref: "user", required: true },
+  received_id: { type: Schema.Types.ObjectId, ref: "user", required: true },
   createdAt: { type: Date, default: Date.now() },
 });
 
