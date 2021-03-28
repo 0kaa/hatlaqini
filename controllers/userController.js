@@ -8,6 +8,7 @@ const jwt = require("jsonwebtoken");
 export const getProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
+    console.log(req.user)
     res.json(user);
   } catch (e) {
     res.send({ message: "Error in Fetching user" });
@@ -74,19 +75,13 @@ export const userLogin = async (req, res) => {
       username: user.username,
     };
 
-    jwt.sign(
-      payload,
-      "randomString",
-      {
-        expiresIn: 3600,
-      },
-      (err, token) => {
-        if (err) throw err;
-        res.status(200).json({
-          token,
-          userResponse,
-        });
-      }
+    jwt.sign(payload, "randomString", { expiresIn: '1h', }, (err, token) => {
+      if (err) throw err;
+      res.status(200).json({
+        token,
+        userResponse,
+      });
+    }
     );
   } catch (e) {
     console.error(e);
@@ -132,12 +127,7 @@ export const userRegister = async (req, res) => {
       username: user.username,
     };
 
-    jwt.sign(
-      payload,
-      "randomString",
-      {
-        expiresIn: 10000,
-      },
+    jwt.sign(payload, "randomString", { expiresIn: '1h' },
       (err, token) => {
         if (err) throw err;
         res.status(200).json({

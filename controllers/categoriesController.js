@@ -1,5 +1,5 @@
 // Import Categories Model
-import { Categories } from "./../models/Model.js";
+import { Categories } from "../models/Model.js";
 
 import CATEGORIES_MODEL from "../utilities/categories-data.js";
 

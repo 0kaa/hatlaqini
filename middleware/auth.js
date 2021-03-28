@@ -9,11 +9,11 @@ const auth = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, "randomString");
+    console.log(decoded)
     req.user = decoded.user;
     next();
   } catch (e) {
-    console.error(e);
-    res.status(500).send({ message: "Invalid Token" });
+    res.status(500).send({ message: e.message, });
   }
 };
 

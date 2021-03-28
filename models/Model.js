@@ -3,14 +3,22 @@ const Schema = mongoose.Schema;
 
 const CategoriesSchema = Schema({
   title: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now() },
-  itemCounts: { type: Number, default: 0 },
+  createdAt: { type: Date, default: Date.now() }
 });
 
 const ItemSchema = Schema({
   title: { type: String, required: true },
+  description: { type: String },
+  category: { type: Schema.Types.ObjectId, ref: "categories" },
+  type: { type: String },
   createdAt: { type: Date, default: Date.now() },
-  categories: [{ type: Schema.Types.ObjectId, ref: "categories" }],
+  location: { type: Schema.Types.ObjectId, ref: "locations" },
+});
+
+const LocationsSchema = Schema({
+  title: { type: String, default: "" },
+  lat: { type: Number },
+  lng: { type: Number }
 });
 
 const UserSchema = Schema({
@@ -40,4 +48,5 @@ export const Categories = mongoose.model("categories", CategoriesSchema);
 export const Item = mongoose.model("item", ItemSchema);
 export const User = mongoose.model("user", UserSchema);
 export const Conversation = mongoose.model("conversation", ConversationSchema);
+export const Locations = mongoose.model("locations", LocationsSchema);
 export const Message = mongoose.model("message", MessageSchema);

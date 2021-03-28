@@ -1,5 +1,5 @@
 import express from "express";
-import { userRegister, userLogin, getUsers, getProfile } from "../controllers/userController.js";
+import { userRegister, userLogin, getUsers, getProfile } from "../controllers/UserController.js";
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const router = express.Router();

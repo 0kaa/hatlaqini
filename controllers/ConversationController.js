@@ -1,23 +1,5 @@
 import { Conversation, User } from "./../models/Model.js";
 
-// Get All Categories
-export const getAllConversations = async (req, res) => {
-    try {
-        const conversations = await Conversation.find()
-            .populate({
-                path: "sender_id",
-                select: "_id username",
-            })
-            .populate({
-                path: "received_id",
-                select: "_id username",
-            });
-        res.status(200).json({ success: true, conversations });
-    } catch (error) {
-        res.status(404).json({ message: error });
-    }
-};
-
 // Create Conversation
 export const CreateConversation = async (req, res) => {
     try {

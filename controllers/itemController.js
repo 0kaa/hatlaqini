@@ -1,5 +1,5 @@
 import ITEM_MODEL from "../utilities/item-data.js";
-import { Categories, Item } from "./../models/Model.js";
+import { Categories, Item } from "../models/Model.js";
 
 // Get All Categories
 export const getItems = async (req, res) => {
@@ -8,9 +8,16 @@ export const getItems = async (req, res) => {
 
     res.status(200).json({ items });
   } catch (error) {
-    res.status(404).json({ message: error });
+    res.status(404).json({ message: error.message });
   }
 };
+
+export const getSingleItem = async (req, res) => {
+  const items = await ITEM_MODEL.getSingleItem(req.params._id)
+  return res.status(200).json(items)
+}
+
+
 // Get All Categories
 export const getItemsByCatID = async (req, res) => {
   try {
@@ -28,29 +35,13 @@ export const getItemsByCatID = async (req, res) => {
 };
 // Create New Item
 export const createItem = async (req, res) => {
+
+
   try {
-    let { title, categories } = req.body;
-
-    categories = [...new Set(categories)];
-
-    let newItem = new Item({
-      title,
-      categories,
-    });
-
+    let newItem = new Item(req.body);
+    console.log(req.file)
     await newItem.save();
-
     res.status(200).json(newItem);
-
-    for (let i = 0; i <= categories.length - 1; i++) {
-      let cat = await Categories.findById(categories[i]);
-
-      const items = await Item.find({ categories: categories[i] }).populate("categories");
-
-      cat.itemCounts = items.length;
-
-      cat.save();
-    }
   } catch (error) {
     res.status(404).json(error);
   }
