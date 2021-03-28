@@ -8,17 +8,22 @@ const CategoriesSchema = Schema({
 
 const ItemSchema = Schema({
   title: { type: String, required: true },
+  image: { type: String, required: true },
   description: { type: String },
   category: { type: Schema.Types.ObjectId, ref: "categories" },
-  type: { type: String },
+  type: { type: Schema.Types.ObjectId, ref: "type" },
   createdAt: { type: Date, default: Date.now() },
   location: { type: Schema.Types.ObjectId, ref: "locations" },
 });
 
+const TypeSchema = Schema({
+  title: { type: String, required: true },
+});
+
 const LocationsSchema = Schema({
-  title: { type: String, default: "" },
-  lat: { type: Number },
-  lng: { type: Number }
+  title: { type: String, default: "", required: true },
+  lat: { type: Number, required: true },
+  lng: { type: Number, required: true }
 });
 
 const UserSchema = Schema({
@@ -46,6 +51,7 @@ const MessageSchema = Schema({
 
 export const Categories = mongoose.model("categories", CategoriesSchema);
 export const Item = mongoose.model("item", ItemSchema);
+export const Type = mongoose.model("type", TypeSchema);
 export const User = mongoose.model("user", UserSchema);
 export const Conversation = mongoose.model("conversation", ConversationSchema);
 export const Locations = mongoose.model("locations", LocationsSchema);

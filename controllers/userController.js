@@ -8,7 +8,6 @@ const jwt = require("jsonwebtoken");
 export const getProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    console.log(req.user)
     res.json(user);
   } catch (e) {
     res.send({ message: "Error in Fetching user" });
@@ -25,7 +24,6 @@ export const getUsers = async (req, res) => {
     const users = await User.find().select("-password");
 
     if (username) {
-      console.log(oneUser);
       res.status(201).json(oneUser);
     } else {
       res.status(201).json(users);
@@ -84,7 +82,6 @@ export const userLogin = async (req, res) => {
     }
     );
   } catch (e) {
-    console.error(e);
     res.status(500).json({
       message: "Server Error",
     });
@@ -137,7 +134,6 @@ export const userRegister = async (req, res) => {
       }
     );
   } catch (err) {
-    console.log(err.message);
     res.status(500).send(err.message);
   }
 };

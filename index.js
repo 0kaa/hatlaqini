@@ -8,9 +8,9 @@ import CategoriesRoutes from "./routes/CategoriesRoutes.js";
 import ItemsRoutes from "./routes/ItemsRoutes.js";
 import ChatRoutes from "./routes/ChatRoutes.js";
 import LocationRoutes from "./routes/LocationRoutes.js";
+import TypeRoutes from './routes/TypeRoutes.js';
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
-
 
 var http = require("http").Server(app);
 var io = require("socket.io")(http);
@@ -20,6 +20,7 @@ app.use(bodyParser.json({ limit: "1kb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "1kb", extended: true }));
 
 app.use("/", UserRoutes);
+app.use('/type', TypeRoutes);
 app.use("/locations", LocationRoutes);
 app.use("/chat", ChatRoutes);
 app.use("/categories", CategoriesRoutes);

@@ -1,7 +1,11 @@
 import { Locations } from './../models/Model.js'
 
-export const CreateLocation = (req, res) => {
-    const newLocation = new Locations(req.body);
-    newLocation.save()
-    res.status(201).json(newLocation)
+export const CreateLocation = async (req, res) => {
+    try {
+        const newLocation = new Locations(req.body);
+        await newLocation.save()
+        res.status(201).json(newLocation)
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
 }
