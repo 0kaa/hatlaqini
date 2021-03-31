@@ -5,6 +5,7 @@ const require = createRequire(import.meta.url);
 const router = express.Router();
 import auth from "../middleware/auth.js";
 const { check } = require("express-validator/check");
+import upload from './../utilities/upload.js'
 
 /**
  * @method - POST
@@ -20,19 +21,7 @@ router.get("/", (req, res) => {
 
 router.get("/profile", auth, getProfile);
 
-router.post(
-  "/signup",
-  [
-    check("username", "Please Enter a Valid Username")
-      .not()
-      .isEmpty(),
-    check("email", "Please enter a valid email").isEmail(),
-    check("password", "Please enter a valid password").isLength({
-      min: 6,
-    }),
-  ],
-  userRegister
-);
+router.post("/signup", upload.single("image"), userRegister);
 
 router.post(
   "/login",

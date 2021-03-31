@@ -7,10 +7,10 @@ const jwt = require("jsonwebtoken");
 
 export const getProfile = async (req, res) => {
   try {
-    const user = await User.findById(req.user.id);
-    res.json(user);
+    const user = await User.findById(req.user.id).select('-password');
+    res.status(200).json(user);
   } catch (e) {
-    res.send({ message: "Error in Fetching user" });
+    res.send({ message: e.message });
   }
 };
 
@@ -44,14 +44,14 @@ export const userLogin = async (req, res) => {
     });
   }
 
-  const { username, password } = req.body;
+  const { email, password } = req.body;
   try {
     let user = await User.findOne({
-      username,
+      email,
     });
     if (!user)
       return res.status(400).json({
-        msg: "Username or password is incorrect",
+        message: "يوجد خطأ في اسم المستخدم او كلمة المرور يرجي اعادة المحاولة"
       });
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -71,6 +71,7 @@ export const userLogin = async (req, res) => {
       createdAt: user.createdAt,
       email: user.email,
       username: user.username,
+      image: user.image
     };
 
     jwt.sign(payload, "randomString", { expiresIn: '1h', }, (err, token) => {
@@ -83,7 +84,7 @@ export const userLogin = async (req, res) => {
     );
   } catch (e) {
     res.status(500).json({
-      message: "Server Error",
+      message: e.message
     });
   }
 };
@@ -96,35 +97,29 @@ export const userRegister = async (req, res) => {
     });
   }
 
-  const { username, email, password } = req.body;
+  const data = req.body;
+  const image = req.file;
+  if (image) {
+    data.image = req.protocol + "://" + req.get("host") + "/" + image.path;
+  } else {
+    res.status(404).json({ message: "Image Required" });
+  }
   try {
     var user = await User.findOne({
-      email,
+      email: data.email,
     });
-    user = new User({
-      username,
-      email,
-      password,
-    });
-
+    user = new User(data);
     const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(password, salt);
-
+    user.password = await bcrypt.hash(data.password, salt);
     await user.save();
-
-    const payload = {
-      user: {
-        id: user.id,
-      },
-    };
     const userResponse = {
       _id: user.id,
       createdAt: user.createdAt,
       email: user.email,
       username: user.username,
+      image: user.image
     };
-
-    jwt.sign(payload, "randomString", { expiresIn: '1h' },
+    jwt.sign({ user: { id: user.id } }, "randomString", { expiresIn: '1h' },
       (err, token) => {
         if (err) throw err;
         res.status(200).json({
@@ -133,7 +128,8 @@ export const userRegister = async (req, res) => {
         });
       }
     );
+
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).json({ message: err.message });
   }
 };
