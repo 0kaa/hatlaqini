@@ -23,6 +23,11 @@ router.get("/profile", auth, getProfile);
 
 router.post("/signup", upload.single("image"), userRegister);
 
+// [POST] /logout
+router.post('/logout', (_req, res) => {
+  res.json({ status: 'OK' })
+})
+
 router.post(
   "/login",
   [

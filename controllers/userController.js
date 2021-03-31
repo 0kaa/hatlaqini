@@ -8,11 +8,12 @@ const jwt = require("jsonwebtoken");
 export const getProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password');
-    res.status(200).json(user);
+    res.status(200).json({ user });
   } catch (e) {
     res.send({ message: e.message });
   }
 };
+
 
 export const getUsers = async (req, res) => {
   try {

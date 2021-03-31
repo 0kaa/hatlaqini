@@ -9,7 +9,7 @@ router.get('/:_id', getSingleItem)
 
 router.post("/", upload.single("image"), createItem) // Post New Category
 
-router.get("/cat", getItemsByCatID) // Post New Category
+router.get("/category/:_id", getItemsByCatID) // Post New Category
 
 router.delete("/", deleteItem) // Delete Category By Slug
 

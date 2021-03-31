@@ -4,7 +4,8 @@ const require = createRequire(import.meta.url);
 const jwt = require("jsonwebtoken");
 
 const auth = (req, res, next) => {
-  const token = req.header("token");
+  const token = req.header("Authorization");
+
   if (!token) return res.status(401).json({ message: "Auth Error" });
 
   try {

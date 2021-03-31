@@ -1,5 +1,5 @@
 import ITEM_MODEL from "../utilities/item-data.js";
-import { Item } from "../models/Model.js";
+import { Item, Categories } from "../models/Model.js";
 import fs from "fs";
 // Get All Categories
 export const getItems = async (req, res) => {
@@ -21,14 +21,16 @@ export const getSingleItem = async (req, res) => {
 // Get All Categories
 export const getItemsByCatID = async (req, res) => {
   try {
-    const id = req.query.id;
+    const id = req.params.id;
 
-    let items, itemCounts;
-    items = await Item.find({ categories: id });
+    let items = await Item.find({ categories: id }).populate({
+      path: "category",
+      select: "-createdAt"
+    }).populate("location");;
 
-    itemCounts = items.length;
+    let category = await Categories.findById(req.params._id);
 
-    res.status(200).json({ items, itemCounts });
+    res.status(200).json({ category, items, });
   } catch (error) {
     res.status(404).json({ message: error });
   }
