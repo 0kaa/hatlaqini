@@ -5,7 +5,10 @@ const ITEM_MODEL = {
     return Item.find().populate({
       path: "category",
       select: "-createdAt"
-    }).populate("location");
+    }).populate("location").populate({
+      path: 'user',
+      select: '-password'
+    });
   },
   getItemByTitle: (q) => {
     return Item.find({ title: { $regex: q, $options: "$i" } });

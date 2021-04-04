@@ -9,6 +9,7 @@ const CategoriesSchema = Schema({
 const ItemSchema = Schema({
   title: { type: String, required: true },
   image: { type: String, required: true },
+  user: { type: Schema.Types.ObjectId, ref: "user", required: true },
   description: { type: String },
   category: { type: Schema.Types.ObjectId, ref: "categories" },
   type: { type: Schema.Types.ObjectId, ref: "type" },
