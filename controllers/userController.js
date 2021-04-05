@@ -100,15 +100,14 @@ export const userRegister = async (req, res) => {
 
   const data = req.body;
   const image = req.file;
-  if (image) {
-    data.image = req.protocol + "://" + req.get("host") + "/" + image.path;
-  } else {
-    res.status(404).json({ message: "Image Required" });
-  }
+
   try {
     var user = await User.findOne({
       email: data.email,
     });
+    if (image) {
+      data.image = req.protocol + "://" + req.get("host") + "/" + image.path;
+    }
     user = new User(data);
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(data.password, salt);

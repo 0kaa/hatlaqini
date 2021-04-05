@@ -21,14 +21,14 @@ export const getSingleItem = async (req, res) => {
 // Get All Categories
 export const getItemsByCatID = async (req, res) => {
   try {
-    const id = req.params.id;
+    const id = req.params._id;
 
-    let items = await Item.find({ categories: id }).populate({
+    let items = await Item.find({ category: id }).populate({
       path: "category",
       select: "-createdAt"
     }).populate("location");;
 
-    let category = await Categories.findById(req.params._id);
+    let category = await Categories.findById(id);
 
     res.status(200).json({ category, items, });
   } catch (error) {
@@ -42,8 +42,6 @@ export const createItem = async (req, res) => {
     const data = req.body;
     if (image) {
       data.image = req.protocol + "://" + req.get("host") + "/" + image.path;
-    } else {
-      res.status(404).json({ message: "Image Required" });
     }
     let newItem = new Item(data);
     await newItem.save();

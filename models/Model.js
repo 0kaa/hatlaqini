@@ -4,17 +4,21 @@ const Schema = mongoose.Schema;
 const CategoriesSchema = Schema({
   title: { type: String, required: true },
   createdAt: { type: Date, default: Date.now() }
+}, {
+  timestamps: true
 });
 
 const ItemSchema = Schema({
-  title: { type: String, required: true },
-  image: { type: String, required: true },
+  title: { type: String, required: [true, 'العنوان مطلوب'] },
+  image: { type: String, required: [true, 'الصورة مطلوبة'] },
   user: { type: Schema.Types.ObjectId, ref: "user", required: true },
   description: { type: String },
-  category: { type: Schema.Types.ObjectId, ref: "categories" },
+  category: { type: Schema.Types.ObjectId, ref: "categories", required: true },
   type: { type: Schema.Types.ObjectId, ref: "type" },
-  createdAt: { type: Date, default: Date.now() },
+  createdAt: { type: Date, default: Date.now },
   location: { type: Schema.Types.ObjectId, ref: "locations" },
+}, {
+  timestamps: true
 });
 
 const TypeSchema = Schema({
@@ -30,9 +34,11 @@ const LocationsSchema = Schema({
 const UserSchema = Schema({
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
-  image: { type: String, required: true },
+  image: { type: String },
   password: { type: String, required: true },
   createdAt: { type: Date, default: Date.now() },
+}, {
+  timestamps: true
 });
 
 const ConversationSchema = Schema({
@@ -41,6 +47,8 @@ const ConversationSchema = Schema({
   latest_msg: { type: String },
   createdAt: { type: Date, default: Date.now() },
   updateAt: { type: Date, default: Date.now() },
+}, {
+  timestamps: true
 });
 
 const MessageSchema = Schema({
@@ -49,6 +57,8 @@ const MessageSchema = Schema({
   sender_id: { type: Schema.Types.ObjectId, ref: "user", required: true },
   received_id: { type: Schema.Types.ObjectId, ref: "user", required: true },
   createdAt: { type: Date, default: Date.now() },
+}, {
+  timestamps: true
 });
 
 export const Categories = mongoose.model("categories", CategoriesSchema);
