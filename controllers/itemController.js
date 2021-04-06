@@ -26,7 +26,10 @@ export const getItemsByCatID = async (req, res) => {
     let items = await Item.find({ category: id }).populate({
       path: "category",
       select: "-createdAt"
-    }).populate("location");;
+    }).populate({
+      path: 'user',
+      select: '-password'
+    });
 
     let category = await Categories.findById(id);
 
