@@ -8,13 +8,22 @@ const ITEM_MODEL = {
     }).populate("location").populate({
       path: 'user',
       select: '-password'
-    });
+    }).populate('type').sort({ 'createdAt': -1 });
   },
   getItemByTitle: (q) => {
-    return Item.find({ title: { $regex: q, $options: "$i" } });
+    return Item.find({ title: { $regex: q, $options: "$i" } }).sort({ 'createdAt': -1 });
   },
   getSingleItem: (_id) => {
     return Item.findOne({ _id })
+  },
+  itemsByCatID: (id) => {
+    return Item.find({ category: id }).populate({
+      path: "category",
+      select: "-createdAt"
+    }).populate({
+      path: 'user',
+      select: '-password'
+    }).populate('type').sort({ 'createdAt': -1 });
   }
 };
 

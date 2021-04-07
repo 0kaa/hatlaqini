@@ -23,13 +23,7 @@ export const getItemsByCatID = async (req, res) => {
   try {
     const id = req.params._id;
 
-    let items = await Item.find({ category: id }).populate({
-      path: "category",
-      select: "-createdAt"
-    }).populate({
-      path: 'user',
-      select: '-password'
-    });
+    let items = await ITEM_MODEL.itemsByCatID(id);
 
     let category = await Categories.findById(id);
 
@@ -45,6 +39,14 @@ export const createItem = async (req, res) => {
     const data = req.body;
     if (image) {
       data.image = req.protocol + "://" + req.get("host") + "/" + image.path;
+    } else {
+      return res.status(400).json({
+        errors: {
+          image: {
+            message: "الصورة مطلوبة"
+          }
+        }
+      })
     }
     let newItem = new Item(data);
     await newItem.save();

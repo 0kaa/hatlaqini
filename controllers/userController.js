@@ -1,5 +1,6 @@
 import { User } from "../models/Model.js";
 import { createRequire } from "module";
+import fs from "fs";
 const require = createRequire(import.meta.url);
 const { validationResult } = require("express-validator/check");
 const bcrypt = require("bcryptjs");
@@ -92,44 +93,57 @@ export const userLogin = async (req, res) => {
 
 export const userRegister = async (req, res) => {
   const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({
-      errors: errors.array(),
-    });
-  }
-
-  const data = req.body;
-  const image = req.file;
-
+  if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array(), });
   try {
-    var user = await User.findOne({
+    const data = req.body;
+    let user = await User.findOne({
       email: data.email,
     });
-    if (image) {
-      data.image = req.protocol + "://" + req.get("host") + "/" + image.path;
+    if (user) {
+      return res.status(400).json({ message: 'المستخدم مسجل بالفعل' });
     }
-    user = new User(data);
+    user = new User(data)
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(data.password, salt);
     await user.save();
-    const userResponse = {
-      _id: user.id,
-      createdAt: user.createdAt,
-      email: user.email,
-      username: user.username,
-      image: user.image
-    };
     jwt.sign({ user: { id: user.id } }, "randomString", { expiresIn: '1h' },
       (err, token) => {
         if (err) throw err;
-        res.status(200).json({
+        res.json({
           token,
-          userResponse,
+          user,
         });
       }
     );
 
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    return res.status(400).json(err);
   }
 };
+
+
+export const userUpdate = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({
+      errors: errors.array(),
+    });
+  }
+  try {
+    const image = req.file;
+    const data = req.body;
+    const userOldData = await User.findById(req.user.id)
+    if (image) {
+      const userImage = userOldData.image;
+      const oldImage = userImage.slice(userImage.indexOf("uploads"));
+      if (fs.existsSync(oldImage)) fs.unlinkSync(oldImage);
+      data.image = req.protocol + "://" + req.get("host") + "/" + image.path;
+    }
+    const user = await User.findByIdAndUpdate(req.user.id, { username: data.username, image: data.image }, { new: true }).select('-password');
+
+    return res.json(user)
+  } catch (error) {
+    return res.status(400).json(error)
+  }
+
+}
