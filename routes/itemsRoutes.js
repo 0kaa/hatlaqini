@@ -3,9 +3,9 @@ const router = express.Router();
 import { getItems, createItem, getItemsByCatID, deleteItem, getSingleItem } from "../controllers/ItemController.js";
 import upload from './../utilities/upload.js'
 
-router.get("/", getItems) // Get All Categories
+router.get("/", getItems); // Get All Categories
 
-router.get('/:_id', getSingleItem)
+router.get('/:_id', getSingleItem);
 
 router.post("/", upload.single("image"), createItem) // Post New Category
 

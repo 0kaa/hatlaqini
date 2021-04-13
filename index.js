@@ -28,9 +28,9 @@ app.use("/items", ItemsRoutes);
 app.use("/uploads", express.static("uploads"));
 
 const CONNECTION_URL = "mongodb+srv://mahmoud:8u4xwga99ahmiz1q@cluster0.bktlm.mongodb.net/hatlaqini?retryWrites=true&w=majority";
-io.on("connection", () => {
-  console.log("a user is connected");
-});
+
+app.set('socketio', io);
+
 const PORT = process.env.PORT || 5000;
 mongose
   .connect(CONNECTION_URL, {

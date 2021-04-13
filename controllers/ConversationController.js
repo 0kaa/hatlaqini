@@ -1,5 +1,5 @@
 import { Conversation, User } from "./../models/Model.js";
-
+import mongoose from "mongoose";
 // Create Conversation
 export const CreateConversation = async (req, res) => {
     try {
@@ -15,13 +15,13 @@ export const CreateConversation = async (req, res) => {
 
         if (sender_id === received_id) return res.status(500).json({ message: "you cant message yourself" });
 
-        const conversations = await Conversation.find({ sender_id, received_id });
+        const conversation = await Conversation.findOne({ sender_id, received_id });
 
-        if (conversations.length) return res.status(200).json({ conversations });
+        if (conversation) return res.status(200).json({ conversation });
 
-        const conversationsTwo = await Conversation.find({ sender_id: received_id, received_id: sender_id });
+        const conversationsTwo = await Conversation.findOne({ sender_id: received_id, received_id: sender_id });
 
-        if (conversationsTwo.length) return res.status(200).json({ conversations: conversationsTwo });
+        if (conversationsTwo) return res.status(200).json({ conversation: conversationsTwo });
 
         const newConv = new Conversation({
             sender_id,
@@ -31,9 +31,27 @@ export const CreateConversation = async (req, res) => {
 
         await newConv.save();
 
-        res.status(200).json({ success: true, conversations: newConv });
+        res.status(200).json({ success: true, conversation: newConv });
 
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
 };
+
+
+export const getConversationsByUserID = async (req, res) => {
+    try {
+        const id = req.user.id;
+        const conversations = await Conversation.find({ $or: [{ sender_id: id }, { received_id: id }] }).populate({
+            path: "sender_id",
+            select: "_id username image",
+        })
+            .populate({
+                path: "received_id",
+                select: "_id username image",
+            })
+        res.json({ conversations })
+    } catch (error) {
+        res.status(404).json(error.message)
+    }
+}

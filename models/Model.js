@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const CategoriesSchema = Schema({
   title: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now() }
+  createdAt: { type: Date, default: Date.now },
 }, {
   timestamps: true
 });
@@ -36,7 +36,7 @@ const UserSchema = Schema({
   email: { type: String, required: true, unique: true },
   image: { type: String, default: "" },
   password: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now() },
+  createdAt: { type: Date, default: Date.now },
 }, {
   timestamps: true
 });
@@ -45,8 +45,7 @@ const ConversationSchema = Schema({
   sender_id: { type: Schema.Types.ObjectId, ref: "user", required: true },
   received_id: { type: Schema.Types.ObjectId, ref: "user", required: true },
   latest_msg: { type: String },
-  createdAt: { type: Date, default: Date.now() },
-  updateAt: { type: Date, default: Date.now() },
+  createdAt: { type: Date, default: Date.now },
 }, {
   timestamps: true
 });
@@ -56,7 +55,7 @@ const MessageSchema = Schema({
   conversation_id: { type: Schema.Types.ObjectId, ref: "conversation", required: true },
   sender_id: { type: Schema.Types.ObjectId, ref: "user", required: true },
   received_id: { type: Schema.Types.ObjectId, ref: "user", required: true },
-  createdAt: { type: Date, default: Date.now() },
+  createdAt: { type: Date, default: Date.now },
 }, {
   timestamps: true
 });

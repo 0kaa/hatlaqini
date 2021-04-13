@@ -4,7 +4,7 @@ import fs from "fs";
 // Get All Categories
 export const getItems = async (req, res) => {
   try {
-    const items = await ITEM_MODEL.getAllItems();
+    const items = await ITEM_MODEL.searchItem(req.query.title, req.query.category);
 
     res.status(200).json({ items });
   } catch (error) {
@@ -16,6 +16,16 @@ export const getSingleItem = async (req, res) => {
   const items = await ITEM_MODEL.getSingleItem(req.params._id)
   return res.status(200).json(items)
 }
+
+// Get Categories By Title
+export const getItemsByTitle = async (req, res) => {
+  try {
+    const items = await Item.find()
+    return res.json(items)
+  } catch (error) {
+    res.status(404).json({ message: `${error}` });
+  }
+};
 
 
 // Get All Categories

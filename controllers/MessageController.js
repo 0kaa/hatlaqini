@@ -1,21 +1,29 @@
 import { Conversation, Message, User } from "../models/Model.js";
-
 // Get All Categories
 export const getMessageByConversationID = async (req, res) => {
   try {
-    const { page = 1, limit = 6, user = "" } = req.query;
-    const message = await Message.find({ conversation_id: req.params.id }).populate({
+    const { page = 1, limit = 200, user = "" } = req.query;
+
+    const message = await Message.find({ conversation_id: req.params._id }).sort({ createdAt: -1 }).populate({
+      path: "sender_id",
+      select: "_id username image",
+    })
+      .populate({
+        path: "received_id",
+        select: "_id username image",
+      }).skip((page - 1) * limit).limit(limit * 1)
+
+
+
+    const conversation = await Conversation.findById(req.params._id).populate({
       path: "sender_id",
       select: "_id username",
     })
       .populate({
         path: "received_id",
         select: "_id username",
-      }).limit(limit * 1)
-      .skip((page - 1) * limit)
-      .sort({ created_at: -1 })
-      .exec();
-    res.status(200).json({ success: true, messages: message })
+      })
+    res.status(200).json({ success: true, messages: message, conversation })
   } catch (error) {
     res.status(404).json({ message: error });
   }
@@ -76,11 +84,14 @@ export const CreateChat = async (req, res) => {
 
     newMessage.save();
 
-    res.status(201).json({ success: true, message: newMessage });
+
+
+    const message = await Message.populate(newMessage, [{ path: "sender_id", select: "_id username image" }, { path: "received_id", select: "_id username image" }]);
+    var io = req.app.get('socketio');
+    io.emit('chatMessage', message);
+    res.status(201).json({ success: true, message });
 
     conversation.latest_msg = newMessage.msg;
-
-    conversation.updateAt = Date.now();
 
     await conversation.save();
   } catch (error) {

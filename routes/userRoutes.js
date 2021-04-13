@@ -1,5 +1,13 @@
 import express from "express";
-import { userRegister, userLogin, getUsers, getProfile, userUpdate } from "../controllers/UserController.js";
+import {
+  userRegister,
+  userLogin,
+  getUsers,
+  getProfile,
+  userUpdate,
+  changePassword,
+  getUser,
+} from "../controllers/UserController.js";
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const router = express.Router();
@@ -21,7 +29,11 @@ router.get("/", (req, res) => {
 
 router.get("/profile", auth, getProfile);
 
+router.get("/user/:_id", getUser);
+
 router.post("/user/update", [auth, upload.single("image")], userUpdate);
+
+router.post("/user/update/password", auth, changePassword);
 
 router.post("/signup", [
   check("email", "يرجي ادخال البريد الالكتروني بطريقة صحيحة").isEmail(),
