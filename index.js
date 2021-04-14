@@ -2,12 +2,12 @@ import express from "express";
 import bodyParser from "body-parser";
 import mongose from "mongoose";
 import cors from "cors";
-import UserRoutes from "./routes/userRoutes.js";
-import CategoriesRoutes from "./routes/CategoriesRoutes.js";
-import ItemsRoutes from "./routes/ItemsRoutes.js";
-import ChatRoutes from "./routes/ChatRoutes.js";
-import LocationRoutes from "./routes/LocationRoutes.js";
-import TypeRoutes from './routes/TypeRoutes.js';
+import UserRoutes from "./routes/user.js";
+import CategoriesRoutes from "./routes/categories.js";
+import ItemsRoutes from "./routes/items.js";
+import ChatRoutes from "./routes/chat.js";
+import LocationRoutes from "./routes/location.js";
+import TypeRoutes from './routes/type.js';
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 
