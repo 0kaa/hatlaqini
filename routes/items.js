@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
-import { getItems, createItem, getItemsByCatID, deleteItem, getSingleItem } from "../controllers/ItemController.js";
-import upload from '../utilities/upload.js'
+import { getItems, createItem, getItemsByCatID, deleteItem, getSingleItem } from "./../controllers/item.js";
+import upload from './../utilities/upload.js'
 
 router.get("/", getItems); // Get All Categories
 

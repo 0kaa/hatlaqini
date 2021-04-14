@@ -7,7 +7,7 @@ import {
   userUpdate,
   changePassword,
   getUser,
-} from "./../controllers/UserController.js";
+} from "../controllers/user.js";
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const router = express.Router();
