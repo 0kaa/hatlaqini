@@ -7,13 +7,13 @@ import {
   userUpdate,
   changePassword,
   getUser,
-} from "../controllers/UserController.js";
+} from "./../controllers/UserController.js";
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const router = express.Router();
-import auth from "../middleware/auth.js";
+import auth from "./../middleware/auth.js";
 const { check } = require("express-validator/check");
-import upload from '../utilities/upload.js'
+import upload from './../utilities/upload.js'
 
 /**
  * @method - POST
