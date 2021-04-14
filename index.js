@@ -1,9 +1,8 @@
 import express from "express";
-const app = express();
 import bodyParser from "body-parser";
 import mongose from "mongoose";
 import cors from "cors";
-import UserRoutes from "./routes/UserRoutes.js";
+import UserRoutes from "./routes/userRoutes.js";
 import CategoriesRoutes from "./routes/CategoriesRoutes.js";
 import ItemsRoutes from "./routes/ItemsRoutes.js";
 import ChatRoutes from "./routes/ChatRoutes.js";
@@ -12,6 +11,7 @@ import TypeRoutes from './routes/TypeRoutes.js';
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 
+const app = express();
 var http = require("http").Server(app);
 var io = require("socket.io")(http);
 
