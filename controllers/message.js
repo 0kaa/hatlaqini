@@ -1,4 +1,4 @@
-import { Conversation, Message, User } from "../models/model.js";
+import { Conversation, Message, User } from "./../models/model.js";
 // Get All Categories
 export const getMessageByConversationID = async (req, res) => {
   try {

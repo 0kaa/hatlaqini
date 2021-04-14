@@ -1,7 +1,7 @@
 // Import Categories Model
-import { Categories } from "../models/model.js";
+import { Categories } from "./../models/model.js";
 
-import CATEGORIES_MODEL from "../utilities/categories-data.js";
+import CATEGORIES_MODEL from "./../utilities/categories-data.js";
 
 // Get All Categories
 export const getCategories = async (req, res) => {

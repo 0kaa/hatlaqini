@@ -1,5 +1,4 @@
-import { Conversation, User } from "../models/model.js";
-import mongoose from "mongoose";
+import { Conversation, User } from "./../models/model.js";
 // Create Conversation
 export const CreateConversation = async (req, res) => {
     try {
