@@ -1,1 +1,1 @@
-web: node --experimental-modules index.js
+web: npm start

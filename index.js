@@ -1,7 +1,11 @@
-import express from "express";
-import bodyParser from "body-parser";
-import mongose from "mongoose";
-import cors from "cors";
+// import express from "express";
+const express = require('express')
+const bodyParser = require('body-parser')
+const mongose = require('mongoose')
+const cors = require('cors')
+// import bodyParser from "body-parser";
+// import mongose from "mongoose";
+// import cors from "cors";
 // import UserRoutes from "./routes/user.js";
 // import CategoriesRoutes from "./routes/categories.js";
 // import ItemsRoutes from "./routes/items.js";
