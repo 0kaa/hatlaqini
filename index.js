@@ -13,11 +13,10 @@ const require = createRequire(import.meta.url);
 
 const app = express();
 var http = require("http").Server(app);
-
-
-app.use(cors({ origin: '*' }));
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
+
+
 app.use(function (req, res, next) {
 
   // Website you wish to allow to connect
@@ -36,6 +35,8 @@ app.use(function (req, res, next) {
   // Pass to next layer of middleware
   next();
 });
+app.use(cors({ origin: '*' }));
+
 
 var io = require("socket.io")(http, {
   cors: {
@@ -50,7 +51,9 @@ app.use("/categories", CategoriesRoutes);
 app.use("/items", ItemsRoutes);
 app.use("/uploads", express.static("uploads"));
 const CONNECTION_URL = "mongodb+srv://mahmoud:8u4xwga99ahmiz1q@cluster0.bktlm.mongodb.net/hatlaqini?retryWrites=true&w=majority";
+
 app.set('socketio', io);
+io.set('origins', 'https://127.0.0.1:3000');
 
 
 const PORT = process.env.PORT || 5000;
