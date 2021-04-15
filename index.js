@@ -12,7 +12,6 @@ import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 
 const app = express();
-app.use(cors());
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 var http = require("http").createServer();
@@ -21,7 +20,8 @@ var io = require("socket.io")(http, {
     origin: '*',
   }
 });
-app.set('socketio', io);
+app.use(cors());
+
 app.use("/", UserRoutes);
 app.use('/type', TypeRoutes);
 app.use("/locations", LocationRoutes);
@@ -31,6 +31,8 @@ app.use("/items", ItemsRoutes);
 app.use("/uploads", express.static("uploads"));
 
 const CONNECTION_URL = "mongodb+srv://mahmoud:8u4xwga99ahmiz1q@cluster0.bktlm.mongodb.net/hatlaqini?retryWrites=true&w=majority";
+
+app.set('socketio', io);
 
 const PORT = process.env.PORT || 5000;
 mongose
