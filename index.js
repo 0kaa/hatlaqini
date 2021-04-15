@@ -19,12 +19,8 @@ var http = require("http").Server(app);
 var io = require("socket.io")(http, {
   cors: {
     origin: '*',
-    methods: ["GET", "POST"],
-    credentials: true
   }
 });
-io.set('origins', '*localhost:3000');
-
 app.set('socketio', io);
 app.use("/", UserRoutes);
 app.use('/type', TypeRoutes);
