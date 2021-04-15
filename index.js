@@ -16,7 +16,7 @@ var http = require("http").Server(app);
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 
-app.use(cors({ origin: '*' }));
+
 app.use("/", UserRoutes);
 app.use('/type', TypeRoutes);
 app.use("/locations", LocationRoutes);
@@ -39,7 +39,7 @@ var io = require("socket.io")(http, {
 });
 app.set('socketio', io);
 
-
+app.use(cors({ origin: '*' }));
 
 
 const PORT = process.env.PORT || 5000;
