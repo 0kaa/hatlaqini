@@ -23,6 +23,7 @@ var io = require("socket.io")(http, {
     credentials: true
   }
 });
+io.set('origins', '*localhost:3000');
 
 app.set('socketio', io);
 app.use("/", UserRoutes);
