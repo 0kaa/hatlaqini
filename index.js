@@ -19,7 +19,7 @@ app.use(cors());
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 
-var io = require("socket.io")(http, { origins: '*:*' });
+var io = require("socket.io")(http, { origins: ["https://hatlaqini.vercel.app"] });
 app.use("/", UserRoutes);
 app.use('/type', TypeRoutes);
 app.use("/locations", LocationRoutes);
