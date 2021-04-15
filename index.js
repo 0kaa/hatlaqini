@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 var http = require("http").createServer();
 var io = require("socket.io")(http, {
   cors: {
-    origin: '*',
+    origin: 'http://localhost:3000',
   }
 });
 app.set('socketio', io);
