@@ -13,7 +13,13 @@ const require = createRequire(import.meta.url);
 
 const app = express();
 var http = require("http").Server(app);
-var io = require("socket.io")(http);
+var io = require("socket.io")(http, {
+  cors: {
+    origin: "https://hatlaqini.vercel.app/",
+    methods: ["GET", "POST"],
+    credentials: true
+  }
+});
 
 app.use(cors());
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
