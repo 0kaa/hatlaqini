@@ -1,4 +1,5 @@
-import { User, Item } from "./../models/model.js";
+import Item from "./../models/item.js";
+import User from "./../models/user.js";
 import { createRequire } from "module";
 import fs from "fs";
 const require = createRequire(import.meta.url);

@@ -1,4 +1,4 @@
-import { Type } from './../models/model.js'
+import Type from './../models/type.js'
 
 export const CreateType = async (req, res) => {
 

@@ -1,4 +1,4 @@
-import { Locations } from './../models/model.js'
+import Locations from './../models/location.js'
 
 export const CreateLocation = async (req, res) => {
     try {

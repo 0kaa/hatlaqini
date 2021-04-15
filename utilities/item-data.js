@@ -1,4 +1,4 @@
-import { Item } from "../models/model.js";
+import Item from "../models/item.js";
 
 const ITEM_MODEL = {
   getAllItems: () => {
