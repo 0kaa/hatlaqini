@@ -13,6 +13,11 @@ const require = createRequire(import.meta.url);
 
 const app = express();
 var http = require("http").Server(app);
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '* or secific')
+  next();
+})
+
 var io = require("socket.io")(http, {
   cors: {
     origin: "https://hatlaqini.vercel.app/",
