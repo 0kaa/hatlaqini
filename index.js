@@ -12,15 +12,18 @@ import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 
 const app = express();
-app.use(bodyParser.json({ limit: "30mb", extended: true }));
-app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
-var http = require("http").createServer();
+var http = require("http").Server(app);
 var io = require("socket.io")(http, {
   cors: {
-    origin: '*',
+    origin: "https://hatlaqini.vercel.app/",
+    methods: ["GET", "POST"],
+    credentials: true
   }
 });
+
 app.use(cors());
+app.use(bodyParser.json({ limit: "30mb", extended: true }));
+app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 
 app.use("/", UserRoutes);
 app.use('/type', TypeRoutes);
@@ -41,7 +44,7 @@ mongose
     useUnifiedTopology: true,
   })
   .then(() => {
-    app.listen(PORT, () => {
+    http.listen(PORT, () => {
       console.log(`Server Running on port ${PORT} `);
     });
   })
