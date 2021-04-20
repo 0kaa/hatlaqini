@@ -49,7 +49,7 @@ export const getConversationsByUserID = async (req, res) => {
             .populate({
                 path: "received_id",
                 select: "_id username image",
-            })
+            }).sort({ 'updatedAt': -1 });
         res.json({ conversations })
     } catch (error) {
         res.status(404).json(error.message)

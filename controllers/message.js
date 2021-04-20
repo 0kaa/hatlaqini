@@ -86,8 +86,6 @@ export const CreateChat = async (req, res) => {
 
     newMessage.save();
 
-
-
     const message = await Message.populate(newMessage, [{ path: "sender_id", select: "_id username image" }, { path: "received_id", select: "_id username image" }]);
     var io = req.app.get('socketio');
     io.emit('chatMessage', message);

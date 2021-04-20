@@ -67,16 +67,49 @@ export const createItem = async (req, res) => {
   }
 };
 
+
+// Update Ad
+export const updateAd = async (req, res) => {
+  try {
+    const image = req.file;
+    const data = req.body;
+    const id = req.user.id
+    const { _id } = req.headers
+    const the_ad = await Item.findById(_id)
+
+    if (the_ad.user == id) {
+      if (image) {
+        const userImage = the_ad.image;
+        const oldImage = userImage.slice(userImage.indexOf("uploads"));
+        if (fs.existsSync(oldImage)) fs.unlinkSync(oldImage);
+        data.image = req.protocol + "://" + req.get("host") + "/" + image.path;
+      }
+      await Item.findByIdAndUpdate(_id, data, { new: true })
+      return res.status(200).json({ message: "تم تعديل الاعلان بنجاح" });
+    } else {
+      return res.status(404).json({ message: 'من انت' });
+    }
+
+  } catch (error) {
+    return res.status(404).json({ message: error.message });
+  }
+};
+
+
 export const deleteItem = async (req, res) => {
   try {
     const { _id } = req.headers;
+    const userID = req.user.id;
     const item = await Item.findById(_id);
     const image = item.image;
-    const oldImage = image.slice(image.indexOf("uploads"));
-    fs.unlinkSync(oldImage);
-    await item.delete();
-    res.status(200).json({ message: `${item.title} deleted` });
-
+    if (userID == item.user) {
+      const oldImage = image.slice(image.indexOf("uploads"));
+      fs.unlinkSync(oldImage);
+      await item.delete();
+      return res.status(200).json({ message: `${item.title} deleted` });
+    } else {
+      return res.status(404).json({ message: 'من انت' });
+    }
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
