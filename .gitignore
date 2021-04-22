@@ -87,3 +87,4 @@ sw.*
 
 # Vim swap files
 *.swp
+uploads/*
