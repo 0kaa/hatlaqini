@@ -104,7 +104,7 @@ export const deleteItem = async (req, res) => {
     const image = item.image;
     if (userID == item.user) {
       const oldImage = image.slice(image.indexOf("uploads"));
-      fs.unlinkSync(oldImage);
+      if (fs.existsSync(oldImage)) fs.unlinkSync(oldImage);
       await item.delete();
       return res.status(200).json({ message: `${item.title} deleted` });
     } else {
