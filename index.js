@@ -27,7 +27,7 @@ app.use("/categories", CategoriesRoutes);
 app.use("/items", ItemsRoutes);
 app.use("/uploads", express.static("uploads"));
 
-const CONNECTION_URL = "mongodb+srv://mahmoud:8u4xwga99ahmiz1q@cluster0.bktlm.mongodb.net/hatlaqini?retryWrites=true&w=majority";
+const CONNECTION_URL = process.env.DB;
 
 app.set('socketio', io);
 
